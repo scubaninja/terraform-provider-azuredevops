@@ -8,7 +8,7 @@ provider "azuredevops" {
 
 // This section creates a project
 resource "azuredevops_project" "project" {
-  name       = "Sample Project"
+  name       = "April's Demo Project"
   visibility         = "private"
   version_control    = "Git"
   work_item_template = "Agile"
@@ -37,7 +37,7 @@ resource "azuredevops_group_membership" "membership" {
 // This section configures variable groups and a build definition
 resource "azuredevops_build_definition" "build" {
   project_id = azuredevops_project.project.id
-  name       = "Sample Build Definition"
+  name       = "First Build Definition"
   path       = "\\ExampleFolder"
 
   repository {
@@ -53,7 +53,7 @@ resource "azuredevops_build_definition" "build" {
 // This section configures an Azure DevOps Variable Group
 resource "azuredevops_variable_group" "vg" {
   project_id   = azuredevops_project.project.id
-  name         = "Sample VG 1"
+  name         = "VG-1"
   description  = "A sample variable group."
   allow_access = true
 
@@ -76,7 +76,7 @@ resource "azuredevops_variable_group" "vg" {
 // This section configures an Azure DevOps Git Repository with branch policies
 resource "azuredevops_git_repository" "repository" {
   project_id = azuredevops_project.project.id
-  name       = "Sample Repo"
+  name       = "Demo Code Repo"
   initialization {
     init_type = "Clean"
   }

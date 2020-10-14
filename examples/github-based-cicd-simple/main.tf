@@ -8,7 +8,7 @@ provider "azuredevops" {
 }
 
 resource "azuredevops_project" "project" {
-  name       = "Sample Project"
+  name       = "TF Provider Demo"
   visibility         = "private"
   version_control    = "Git"
   work_item_template = "Agile"
