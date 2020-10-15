@@ -1,13 +1,18 @@
-resource "azuredevops_project" "a" {
-  project_name = "ADO Demo Project"
+provider "azuredevops" {
+  version = ">= 0.0.1"
 }
+
+resource "azuredevops_project" "a" {
+  project_name = "HashiConf Project"
+}
+ 
  
 resource "azuredevops_variable_group" "vars" {
   project_id   = azuredevops_project.a.id
-  name         = "Variable Group - Infra"
+  name         = "Variable Group Dev"
   description  = "Managed by Terraform"
   allow_access = true
- 
+
   variable {
     name  = "FOO"
     value = "BAR"
@@ -18,7 +23,7 @@ resource "azuredevops_variable_group" "vars" {
     is_secret = true
   }
 }
- 
+
 resource "azuredevops_git_repository" "repo" {
   project_id = azuredevops_project.a.id
   name       = "Code Repo"
@@ -29,8 +34,8 @@ resource "azuredevops_git_repository" "repo" {
  
 resource "azuredevops_build_definition" "build" {
   project_id = azuredevops_project.a.id
-  name       = "Inital Pipeline"
-  
+  name       = "Our First Pipeline"
+
  
   repository {
     repo_type   = "TfsGit"
@@ -41,8 +46,3 @@ resource "azuredevops_build_definition" "build" {
  
   variable_groups = [azuredevops_variable_group.vars.id]
 }
-
-
-# Make sure to set the following environment variables:
-#   AZDO_PERSONAL_ACCESS_TOKEN
-#   AZDO_ORG_SERVICE_URL
